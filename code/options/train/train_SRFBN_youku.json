@@ -1,0 +1,62 @@
+{
+    "mode": "sr",
+    "use_cl": true,
+    "gpu_ids": [0,1,2],
+    "scale": 4,
+    "is_train": true,
+    "use_chop": true,
+    "rgb_range": 255,
+    "self_ensemble": false,
+    "save_image": false,
+
+    "datasets": {
+        "train": {
+            "mode": "LRHR",
+            "dataroot_HR": "/train_tiny_data/super-resolution/round2_train_label",
+            "dataroot_LR": "/train_tiny_data/super-resolution/round2_train_input",
+            "data_type": "img",
+            "n_workers": 4,
+            "batch_size": 96,
+            "LR_size": 25,
+            "use_flip": true,
+            "use_rot": true,
+            "noise": "." // ["G", 1.6]
+        },
+        "val": {
+            "mode": "LRHR",
+            "n_workers": 3,
+            "batch_size": 3,
+            "dataroot_HR": "/train_tiny_data/super-resolution/round2_val_label",
+            "dataroot_LR": "/train_tiny_data/super-resolution/round2_val_input",
+            "data_type": "img"
+        }
+    },
+
+    "networks": {
+        "which_model": "SRFBN",
+        "num_features": 128,
+        "in_channels": 3,
+        "out_channels": 3,
+        "num_steps": 4,
+        "num_groups": 5
+    },
+
+    "solver": {
+        "type": "ADAM",
+        "learning_rate": 3.0e-4,
+        "weight_decay": 0,
+        "lr_scheme": "cos",
+        "lr_min": 1.75e-5,
+        "lr_gamma": 0.5,
+        "loss_type": "l1",
+        "manual_seed": 0,
+        "num_epochs": 600,
+        "skip_threshold": 3,
+        "split_batch": 2,
+        "save_ckp_step": 10,
+        "save_vis_step": 1,
+        "pretrain": "",//"resume",
+        "pretrained_path": "./experiments_round2/SRFBN_in3f64_x4/epochs/SRFBN_x4_YouKu529.pth",
+        "cl_weights": [1.0, 1.0, 1.5, 1.5, 2.0, 2.0]
+    }
+}

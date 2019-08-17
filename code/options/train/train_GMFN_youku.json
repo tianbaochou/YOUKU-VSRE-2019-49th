@@ -1,0 +1,65 @@
+{
+    "mode": "sr",
+    "use_cl": true,
+    "gpu_ids": [0,1,2],
+
+    "scale": 4,
+    "is_train": true,
+    "use_chop": true,
+    "rgb_range": 255,
+    "self_ensemble": false,
+    "save_image": false,
+
+    "datasets": {
+        "train": {
+            "mode": "LRHR",
+            "dataroot_HR": "/train_tiny_data/super-resolution/round2_train_label",
+            "dataroot_LR": "/train_tiny_data/super-resolution/round2_train_input",
+            "data_type": "img",
+            "n_workers": 4,
+            "batch_size": 60,
+            "LR_size": 50,
+            "use_flip": true,
+            "use_rot": true,
+            "noise": ["S", 7]
+        },
+        "val": {
+            "mode": "LRHR",
+            "n_workers": 3,
+            "batch_size": 3,
+            "dataroot_HR": "/train_tiny_data/super-resolution/round2_val_label",
+            "dataroot_LR": "/train_tiny_data/super-resolution/round2_val_input",
+            "data_type": "img"
+        }
+    },
+
+    "networks": {
+        "which_model": "GMFN",
+        "num_features": 64,
+        "in_channels": 3,
+        "out_channels": 3,
+        "num_steps": 4,
+        "num_blocks": 7,
+        "num_reroute_feats": 6,
+        "num_refine_feats": 2
+    },
+
+    "solver": {
+        "type": "ADAM",
+        "learning_rate": 8e-5,
+        "weight_decay": 0,
+        "lr_scheme": "cos",
+        "lr_min": 1.75e-5,
+//        "lr_gamma": 0.5,
+        "loss_type": "l1",
+        "manual_seed": 0,
+        "num_epochs": 200,
+        "skip_threshold": 3,
+        "split_batch": 2,
+        "save_ckp_step": 50,
+        "save_vis_step": 1,
+        "pretrain": "resume",
+        "pretrained_path": "./experiments_round2/GMFN_in3f64_x4/epochs/best_ckp.pth",
+        "cl_weights": [1.0, 1.5, 2.2, 4.0]
+    }
+}

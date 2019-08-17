@@ -1,0 +1,10 @@
+torch>=1.0
+torchvision>=0.2.1
+tqdm
+numpy
+Pillow
+opencv-python
+imageio
+adabound
+tensorboardX
+pandas
