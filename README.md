@@ -69,44 +69,9 @@ We finally got a not bad score and run into the first 50 team.
 运行完成后，请上传`../submit/resulit.zip`结果到评测系统
 
 团队在本地训练模型时用到了3个Titan Pascal卡,为了能够在官方环境正常训练模型，默认为使用
-1个GPU来训练（P100， 16G），故将训练`batch size`调成`96`,并将模型验证集的`batch size`调为`2`.
+1个GPU来训练（P100， 16G），可将训练`batch size`调成`96`,并将模型验证集的`batch size`调为`2`.
 
 > 推理阶段请保存`batch-size=1`,以便可以正确的写入文件夹！
-
-若官方想加快训练，可以将`./options/train/train_youku.json`中的配置改为如下：
-
-
-
-**假定官方有N个至少10G显存的GPU**
-
-```yaml
-"gpu_ids": [0, 1, 2, N-1], # N为官方使用的GPU个数
-...
-
-"datasets": {
-    "train": {
-        "mode": "LRHR",
-        "dataroot_HR": "../data/round1_train_label",
-        "dataroot_LR": "../data/round1_train_input",
-        "data_type": "img",
-        "n_workers": 4,
-        "batch_size": 48xN, # 例如GPU数为2，则batch_size=96
-        "LR_size": 20,
-        "use_flip": true,
-        "use_rot": true,
-        "noise": "." // ["G", 1.6]
-    },
-    "val": {
-        "mode": "LRHR",
-        "n_workers": 1,
-        "batch_size": 1xN, # 例如GPU数为2，则batch_size=2
-        "dataroot_HR": "../data/round1_val_label",
-        "dataroot_LR": "../data/round1_val_input",
-        "data_type": "img"
-    }
-},
-
-```
 
 
 ### 2.3. 模型说明
@@ -127,10 +92,9 @@ Todo:
 - [ ] 提高速度
 
 
-
 ## 4. Result
 
-![result](../imgs/rst.JPG)
+![result](imgs/rst.JPG)
 
 
 ## 4.相关论文
